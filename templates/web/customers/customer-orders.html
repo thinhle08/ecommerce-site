@@ -1,0 +1,63 @@
+{% extends 'web/base.html' %}
+{% block content %}
+{% load static %}
+{% load mathfilters %}
+    <div id="all">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">Đơn hàng đã đặt</li>
+                </ol>
+              </nav>
+            </div>
+{% include 'web/layout/menu_left_cus.html' %}
+            <div id="customer-orders" class="col-lg-9">
+              <div class="box">
+                <h1>Đơn hàng đã đặt</h1>
+                <p class="lead">Các  đơn hàng bạn đã đặt.</p>
+                <p class="text-muted">Nếu bạn có vấn đề gì thắc mắc hay liên hệ với chúng tôi, hỗ trợ khách hàng của chúng tôi làm việc 24/7.</p>
+                <hr>
+                {% if order %}
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Tình trạng</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in order %}
+                      <tr>
+                        <th># {{item.id}}</th>
+                        <td>{{item.created_at}}</td>
+                        <td>{{item.total}}</td>
+                        <td><span class="badge badge-info">{{item.status}}</span></td>
+                        <td>
+                          <a href="{% url 'acc_cancel_order' item.id%}" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></a>
+                          <a href="" data-url="{% url 'acc_order' item.id %}" data-toggle="modal" data-target="#modal-info" class="btn btn-primary btn-sm show-order"><i class="fa fa-eye"></i></a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                <p class="lead">Ban chưa có đặt đơn hàng. <a href="{% url 'categories' %}">Quay lại trang mua sắm</a> </p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+

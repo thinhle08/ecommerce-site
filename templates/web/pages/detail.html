@@ -1,0 +1,109 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+    <div id="all">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'product' %}">Sản phẩm</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">{{products.name}}</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-3 order-2 order-lg-1">
+              <!--
+              *** MENUS AND FILTERS ***
+              _________________________________________________________
+              -->
+{% include 'web/layout/menu_left.html' %}
+              <!-- *** MENUS AND FILTERS END ***-->
+              <div class="banner"><a href="#"><img src="{% static 'web/img/banner.jpg' %}" alt="sales 2014" class="img-fluid"></a></div>
+            </div>
+            <div class="col-lg-9 order-1 order-lg-2">
+              <div id="productMain" class="row">
+                <div class="col-md-6">
+                  <div data-slider-id="1" class="owl-carousel shop-detail-carousel">
+                    <div class="item"> <img src="{{products.image.url}}" alt="" class="img-fluid"></div>
+                    <div class="item"> <img src="{{products.image.url}}" alt="" class="img-fluid"></div>
+                    <div class="item"> <img src="{{products.image.url}}" alt="" class="img-fluid"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <form action="{% url 'add_to_cart' products.id %}" method="post">
+                   {% csrf_token %}
+                  <div class="box">
+                    <h1 class="text-center">{{products.name}}</h1>
+                    <p class="goToDescription"><a href="#details" class="scroll-to">Xem mô tả sản phẩm</a></p>
+
+                    <table class="text-center m-auto">
+                      <tr>
+                        <td><span class="text-center"><b>Số lượng : </b></span></td>
+                        <td><input name="quantity" type="number"  max="10" min="1" value='1' class="form-control"></td>
+                      </tr>
+                    </table>
+                    <p class="price">${{products.price}}</p>
+                    <p class="text-center buttons"><button  type="submit" class="btn btn-primary "><i class="fa fa-shopping-cart"></i> Đặt mua</button>
+                      <a href="{% url 'wish' products.id %}" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Yêu thích</a>
+                    </p>
+                  </div>
+                  </form>
+                  <div data-slider-id="1" class="owl-thumbs">
+                    <button class="owl-thumb-item"><img src="{{products.image.url}}" alt="" class="img-fluid"></button>
+                    <button class="owl-thumb-item"><img src="{{products.image.url}}" alt="" class="img-fluid"></button>
+                    <button class="owl-thumb-item"><img src="{{products.image.url}}" alt="" class="img-fluid"></button>
+                  </div>
+                </div>
+              </div>
+              <div id="details" class="box">
+                <p></p>
+                <h4>Mô tả sản phẩm</h4>
+                <p>{{products.description}}</p>
+                <h4>Kích thước</h4>
+                <ul>
+                  <li>{{products.size}}</li>
+                </ul>
+                <blockquote>
+                  <p><em> Với mẫu mã phong phú, dễ phối đồ, phù hợp với nhiều đồ tuổi, Khăn quàng cổ sẽ là món quà tặng Noel ý nghĩa và tinh tế dành cho bạn gái, người yêu, mẹ, vợ, đồng nghiệp, sếp, cô giáo.. và những người phụ nữ bạn yêu quý.</em></p>
+                </blockquote>
+                <hr>
+                <div class="social">
+                  <h4>Chia sẻ vơi bạn bè</h4>
+                  <p><a href="#" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" class="email"><i class="fa fa-envelope"></i></a></p>
+                </div>
+              </div>
+              <div class="box">
+                <h2>Sản phẩm cùng loại :</h2>
+              </div>
+              <div class="row same-height-row">
+                {% for item in similar_products %}
+                  {% if item != products %}
+                <div class="col-md-3 col-sm-6">
+                  <div class="product same-height">
+                    <div class="flip-container">
+                      <div class="flipper">
+                        <div class="front"><a href="{% url 'detail_product' item.id %}"><img src="{{item.image.url}}" alt="" class="img-fluid"></a></div>
+                        <div class="back"><a href="{% url 'detail_product' item.id %}"><img src="{{item.image.url}}" alt="" class="img-fluid"></a></div>
+                      </div>
+                    </div><a href="{% url 'detail_product' item.id %}" class="invisible"><img src="{{item.image.url}}" alt="" class="img-fluid"></a>
+                    <div class="text">
+                      <h3>{{item.name}}</h3>
+                      <p class="price">$143</p>
+                    </div>
+                  </div>
+                  <!-- /.product-->
+                </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <!-- /.col-md-9-->
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

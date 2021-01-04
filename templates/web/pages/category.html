@@ -1,0 +1,111 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+    <div id="all">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">Danh Mục</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-lg-3">
+              <!--
+              *** MENUS AND FILTERS ***
+              _________________________________________________________
+              -->
+{% include 'web/layout/menu_left.html' %}
+              <!-- *** MENUS AND FILTERS END ***-->
+              <div class="banner"><a href="#"><img src="{% static 'web/img/banner.jpg' %}" alt="sales 2014" class="img-fluid"></a></div>
+            </div>
+            <div class="col-lg-9">
+              <div class="box">
+                {% if cat_id is None %}
+                <h1>Khăn quàng cổ nữ</h1>
+                <p>Khăn choàng cổ dường như là phụ kiện thời trang không thể tách rời phái đẹp trong những ngày tiết trời se lạnh hay lạnh giá.</p>
+                {% endif %}
+                {% if cat_id %}
+                <h1>{{cat_id.name}}</h1>
+                <p>{{cat_id.description}}</p>
+                {% endif %}
+              </div>
+              <div class="row products">
+                {% for product in products %}
+                <div class="col-lg-4 col-md-6">
+                  <div class="product">
+                    <div class="flip-container">
+                      <div class="flipper">
+                        <div class="front"><a href="{% url 'detail_product' product.id %}"><img src="{{product.image.url}}" alt="" class="img-fluid"></a></div>
+                        <div class="back"><a href="{% url 'detail_product' product.id %}"><img src="{{product.image.url}}" alt="" class="img-fluid"></a></div>
+                      </div>
+                    </div><a href="{% url 'detail_product' product.id %}" class="invisible"><img src="{{product.image.url}}" alt="" class="img-fluid"></a>
+                    <div class="text">
+                      <h3><a href="{% url 'detail_product' product.id %}">{{product.name}}</a></h3>
+                      <p class="price"> 
+                        <del></del>${{product.price}}
+                      </p>
+                      <form action="{% url 'add_cart' product.id %}" method="post">
+                        {% csrf_token %}
+                      <p class="buttons"><a href="{% url 'detail_product' product.id %}" class="btn btn-outline-secondary">Chi tiết</a>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Đặt mua</button>
+                      </p>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.products-->
+                {% endfor %}
+              </div>
+              <div class="pages">
+                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                  <ul class="pagination">
+                    {% if products.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% if products.number > 5 %}
+                        <li class="page-item"><a class="page-link" href="?page=1"><i>1</i></a></li>
+                    {% endif %}
+                    {% for i in products.paginator.page_range %}
+                        {% if i > products.number|add:"-5" %}
+                            {% if i < products.number|add:"5" %}
+                                {% if products.number == i %}
+                                    <li class="active page-item"><a class="page-link" href="?page=1"><i>{{i}}</i></a></li>
+                                {% else %}
+                                     <li class=""><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if products.number < products.paginator.num_pages|add:"-5" %}
+                        <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}"><i>{{ products.paginator.num_pages }}</i></a></li>
+                    {% endif %}
+                    {% if products.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+
+<!--                    <li class="page-item"><a href="#" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>-->
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <!-- /.col-lg-9-->
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

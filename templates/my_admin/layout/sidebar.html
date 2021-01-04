@@ -1,0 +1,32 @@
+      <nav id="sidebar">
+        <!-- Sidebar Header-->
+        <div class="sidebar-header d-flex align-items-center"><a href="{% url 'profile_admin' %}">
+          <div class="avatar"><img src="{{obj_info.image.url}}" alt="..." class="img-fluid rounded-circle"></div></a>
+          <div class="title">
+            <h1 class="h5">{{user.first_name}} {{user.last_name}}</h1>
+            <p>Admin</p>
+          </div>
+        </div>
+        <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+        <ul class="list-unstyled">
+          <li class="active"><a href="{% url 'views_admin' %}"> <i class="icon-home"></i>Trang quản lý </a></li>
+          <li><a href="#exampledropdownDropdown1" aria-expanded="false" data-toggle="collapse"> <i class="icon-list"></i>Quản lý danh mục</a>
+            <ul id="exampledropdownDropdown1" class="collapse list-unstyled ">
+                <li><a href="{% url 'table_category' %}">Xem danh mục</a></li>
+                <li><a href="{% url 'add_category' %}">Thêm  mới danh mục</a></li>
+            </ul>
+          </li>
+          <li><a href="#exampledropdownDropdown2" aria-expanded="false" data-toggle="collapse"> <i class="icon-list"></i>Quản lý sảnh phẩm</a>
+            <ul id="exampledropdownDropdown2" class="collapse list-unstyled ">
+                <li><a href="{% url 'table_product' %}">Sản phẩm</a></li>
+                <li><a href="{% url 'add_product' %}">Thêm mới sản phẩm</a></li>
+            </ul>
+          </li>
+            <li><a href="#exampledropdownDropdown3" aria-expanded="false" data-toggle="collapse"> <i class="icon-list"></i>Quản lý khách hàng</a>
+            <ul id="exampledropdownDropdown3" class="collapse list-unstyled ">
+                <li><a href="{% url 'table_customer' %}">Thông tin khách hàng</a></li>
+                <li><a href="{% url 'table_order' %}">Thông tin đơn hàng</a></li>
+            </ul>
+          </li>
+          <li><a href="{% url 'profile_admin' %}"> <i class="icon-user"></i>Profile</a></li>
+      </nav>

@@ -1,0 +1,159 @@
+{% extends 'my_admin/base.html' %}
+{% block content %}
+
+<div class="page-content" xmlns="http://www.w3.org/1999/html">
+        <!-- Page Header-->
+        <div class="page-header no-margin-bottom">
+          <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Profile</h2>
+          </div>
+        </div>
+        <!-- Breadcrumb-->
+        <div class="container-fluid">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active">Profile</li>
+          </ul>
+        </div>
+        <section>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="media"><span style="background-image: url({{obj_info.image.url}})" class="avatar avatar-xl mr-3"></span>
+                      <div class="media-body">
+                        <h5>{{request.user.last_name}} {{request.user.first_name}}</h5>
+                        <p class="text-muted mb-0">Admin</p>
+                        <ul class="social-links list-inline mb-0 mt-2">
+                          <li class="list-inline-item"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="{{user.last_name}} {{user.first_name}}'s Facebook"><i class="fa fa-facebook"></i></a></li>
+                          <li class="list-inline-item"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="@{{user.last_name}} {{user.first_name}}"><i class="fa fa-twitter"></i></a></li>
+                          <li class="list-inline-item"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="{{obj_info.phone}}"><i class="fa fa-phone"></i></a></li>
+                          <li class="list-inline-item"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="@{{user.last_name}} {{user.first_name}}"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <form class="card" enctype="multipart/form-data" method="post">
+                  {% csrf_token %}
+                  <div class="card-header">
+                    <h5 class="card-title">My Profile</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row mb-3">
+                      <div class="col-auto d-flex align-items-center"><span style="background-image: url({{obj_info.image.url}})" class="avatar avatar-lg"></span></div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label class="form-label">My name: </label>
+                          <p>{{user.last_name}} {{user.first_name}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">About me</label>
+                      <textarea rows="8" class="form-control">{{obj_info.content}}</textarea>
+                    </div>
+                    <div class="form-group">
+                      <p>Đổi mật khẩu</p>
+                      <label class="form-label">Password</label>
+                      {{form_change_pass.password}}
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Confirm password</label>
+                      {{form_change_pass.config_password}}
+                    </div>
+                  </div>
+                  <div class="card-footer text-right">
+                    <button class="btn btn-primary" type="submit" >Change Password</button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-lg-8">
+                <form class="card needs-validation" enctype="multipart/form-data" method="post">
+                  {% csrf_token %}
+                  <div class="card-header">
+                    <h5 class="card-title">Edit Profile</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-5">
+
+                      </div>
+                      <div class="col-sm-6 col-md-3">
+
+                      </div>
+                      <div class="col-sm-6 col-md-4">
+
+                      </div>
+                      <div class="col-sm-6 col-md-6">
+                        <div class="form-group mb-4">
+                          <label class="form-label">First Name</label>
+                          {{form_user.first_name}}
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-6">
+                        <div class="form-group mb-4">
+                          <label class="form-label">Last Name</label>
+                          {{form_user.last_name}}
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group mb-4">
+                          <label class="form-label">Address</label>
+                          <input type="text" name="address" value="{{obj_info.address}}" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group mb-4">
+                          <label class="form-label">Email</label>
+                          {{form_user.email}}
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-4">
+                        <div class="form-group mb-4">
+                          <label class="form-label">Phone</label>
+                          <input type="text" name="phone" value="{{obj_info.phone}}" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-3">
+                        <div class="form-group mb-4">
+
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="form-group mb-4">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group mb-4">
+                          <label class="form-label">About Me</label>
+                          <textarea  rows="5" type="text" name="content" class="form-control">{{obj_info.content}}</textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <label class="form-label">Image</label>
+                        <div class="form-group mb-4">
+                          <input type="file" name="image" value="{{obj_info.image.url}}" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-right">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="footer">
+          <div class="footer__block block no-margin-bottom">
+            <div class="container-fluid text-center">
+              <p class="no-margin-bottom">2020 &copy; Your company. </p>
+            </div>
+          </div>
+        </footer>
+      </div>
+
+{% endblock content %}

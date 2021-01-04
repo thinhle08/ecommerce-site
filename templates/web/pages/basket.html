@@ -1,0 +1,84 @@
+{% extends 'web/base.html' %}
+{% block content %}
+{% load static %}
+{% load mathfilters %}
+    <div id="all">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">Giỏ hàng</li>
+                </ol>
+              </nav>
+            </div>
+            <div id="basket" class="col-lg-12">
+              <div class="box">
+                  {% if carts %}
+                  <h1>Giỏ hàng</h1>
+                    <p class="text-muted">Bạn có {{ carts|length }} sản phẩm trong giỏ hàng.</p>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Ảnh sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Giá sản phẩm</th>
+                            <th >Tổng cộng</th>
+                            <th>Cập nhật</th>
+                            <th>Xóa</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for item in carts %}
+                          <form action="{% url 'update_cart' item.id %}" method="post">
+                            {% csrf_token %}
+                          <tr>
+                            <td><a href="{% url 'detail_product' item.obj.id %}"><img src="{{item.obj.image.url}}" alt="{{item.obj.name}}}" width="10px"></a></td>
+                            <td><a href="{% url 'detail_product' item.obj.id %}">{{item.obj.name}}</a></td>
+                            <td>
+                              <input type="number" name="quantity" value="{{item.quantity}}" min="1" class="form-control">
+                            </td>
+                            <td>${{item.obj.price}}</td>
+                            <td>${{item.price}}</td>
+                            <td>
+                                <button class="btn btn-outline-secondary" type="submit" ><i class="fa fa-refresh"></i></button>
+                            </td>
+                            <td>
+                                <a href="{% url 'del_item_cart' item.id %}" ><i class="fa fa-trash-o"></i></a>
+                            </td>
+                          </tr>
+                          </form>
+                          {% endfor %}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan="4">Tổng tiền</th>
+                            <th colspan="3">${{total}}</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  <!-- /.table-responsive-->
+                  <div class="box-footer d-flex justify-content-between flex-column flex-lg-row">
+                    <div class="left"><a href="{% url 'categories' %}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i> Quay lại mua hàng</a></div>
+                    <div class="right">
+                      <a href="{% url 'del_cart' %}" class="btn btn-primary button">Xóa toàn bộ<i class="fa fa-trash"></i></a>
+                      <a href="{% url 'checkout' %}" class="btn btn-primary button">Tiến hành đặt hàng<i class="fa fa-chevron-right"></i></a>
+                    </div>
+                  </div>
+              </div>
+              {% else %}
+              <p class="text-muted">Bạn có chưa có sản phẩm nào trong giỏ hàng. <a href="{% url 'categories' %}"><h5>Quay lại mua hàng</h5></a></p>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+{% endblock content %}

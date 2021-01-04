@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-8">
+        <h3>Tên sản phẩm : {{ obj.name }}</h3>
+        <p><b>Danh mục </b> : {{ obj.cat }}</p>
+        <p><b>Số thứ tự </b> : #{{ obj.id }}</p>
+        <p><b>Mô tả</b> : {{ obj.description }}</p>
+        <p><b>Keyword</b> : {{ obj.keyword }}</p>
+        <p><b>Kích thước sản phẩm</b> : {{ obj.size }}</p>
+    </div>
+    <div class="col-md-4">
+        <img src="{{ obj.image.url }}" alt="" style="width: 100%" class="img-thumbnail">
+        <p><b>Giá sản phẩm </b>: {{ obj.price }}</p>
+        <p><b>Hiển thị tại trang chủ</b> : {{ obj.active_home }}</p>
+        <p><b>Trạng thái</b> : {{ obj.status }}</p>
+    </div>
+</div>

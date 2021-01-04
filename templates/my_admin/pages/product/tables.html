@@ -1,0 +1,71 @@
+{% extends 'my_admin/base.html' %}
+{% block content %}
+
+      <div class="page-content">
+        <!-- Page Header-->
+        <div class="page-header no-margin-bottom">
+          <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Sản phẩm</h2>
+          </div>
+        </div>
+        <!-- Breadcrumb-->
+        <div class="container-fluid">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'views_admin' %}">Home</a></li>
+            <li class="breadcrumb-item active">Sản phẩm </li>
+          </ul>
+        </div>
+        <section class="no-padding-top">
+          <div class="container-fluid">
+            <div class="block">
+              <div class="title"><strong>Thông tin sản phẩm</strong></div>
+              <div class="title">
+                <a href="{% url 'add_product' %}" class="btn btn-primary">Thêm mới sản phẩm</a>
+              </div>
+                <div class="table-responsive">
+                  <table id="datatable1" style="width: 100%;" class="table">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in obj %}
+                      <tr>
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.cat}}</td>
+                        <td>${{item.price}}</td>
+                        <td><img src="{{item.image.url}}" alt="" style="width:100px;"></td>
+                        <td>{{item.status}}</td>
+                        <td>{{item.created_at}}</td>
+                        <td>
+                          <p><a href="{% url 'edit_product' item.id %}" class="btn btn-primary"><i class="fa fa-edit"></i></a></p>
+                          <p></p><a href="{% url 'delete_product' item.id %}" class="btn btn-primary"><i class="fa fa-trash"></i></a></p>
+                          <a href="" class="btn btn-info show-product" data-url="{% url 'show_product' item.id %}" data-toggle="modal" data-target="#modal-info"><i class="fa fa-eye"></i> </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </section>
+        <footer class="footer">
+          <div class="footer__block block no-margin-bottom">
+            <div class="container-fluid text-center">
+              <p class="no-margin-bottom">2020 &copy; Your company. </p>
+            </div>
+          </div>
+        </footer>
+
+
+{% endblock content %}

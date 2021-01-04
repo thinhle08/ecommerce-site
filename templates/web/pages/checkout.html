@@ -1,0 +1,129 @@
+{% extends 'web/base.html' %}
+{% block content %}
+{% load static %}
+{% load mathfilters %}
+    <div id="all">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">Thông tin đặt hàng</li>
+                </ol>
+              </nav>
+            </div>
+            <div id="checkout" class="col-lg-8">
+              <div class="box">
+                <form method="post" action="{% url 'order_successful' %} " class="was-validated">
+                  {% csrf_token %}
+                  <h3>Thông tin đặt hàng</h3>
+                  <div class="content py-3">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="first_name">Họ</label>
+                          <input id="first_name" type="text" class="form-control" value="{{obj_user.first_name}}">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="last_name">Tên</label>
+                          <input id="last_name" type="text" value="{{obj_user.last_name}}" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.row-->
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="address">Địa chỉ</label>
+                          <input id="address" name="address" type="text" value="{{obj_info.address}}" class="form-control" placeholder="Địa chỉ nhận hàng" required >
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.row-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="phone">Số điện thoại</label>
+                          <input id="phone" name="phone" type="text" value="{{obj_info.phone}}" class="form-control" placeholder="Số điện thoại nhận hàng" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="email">Email</label>
+                          <input id="email" type="text" class="form-control" value="{{obj_user.email}}">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.row-->
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="box payment-method">
+                          <h4>Thẻ AMT/Internet Banking</h4>
+                          <p>Miễn phí thanh toán.</p>
+                          <div class="box-footer text-center">
+                            <input type="radio" name="payment" value="Thẻ AMT/Internet Banking" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="box payment-method">
+                          <h4>Thanh toán tiền mặt</h4>
+                          <p>Thanh toán tiền mặt khi nhận hàng.</p>
+                          <div class="box-footer text-center">
+                            <input type="radio" name="payment" value="Thanh toán tiền mặt" required>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <div class="box-footer d-flex justify-content-between"><a href="{% url 'basket' %}" class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Quay lại giỏ hàng</a>
+                    <button type="submit" class="btn btn-primary">Đặt hàng<i class="fa fa-chevron-right"></i></button>
+                  </div>
+                </div>
+                </form>
+              </div>
+            </div>
+              <!-- /.box-->
+            <!-- /.col-lg-9-->
+            <div class="col-lg-4">
+              <div id="order-summary" class="card">
+                <div class="card-header">
+                  <h3 class="mt-4 mb-4">Thông tin đơn hàng</h3>
+                </div>
+                <div class="card-body">
+                  <p class="text-muted">Sản phẩm có trong giỏ hàng :</p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <td>Sản phẩm</td>
+                          <td>Số lượng</td>
+                          <td>Tổng</td>
+                        </tr>
+                        {% for item in carts %}
+                        <tr>
+                          <td>{{item.obj.name}}</td>
+                          <td>{{item.quantity}}</td>
+                          <td>${{item.price}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="total">
+                          <td colspan="2">Tổng tiền</td>
+                          <th>${{total}}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.col-lg-3-->
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

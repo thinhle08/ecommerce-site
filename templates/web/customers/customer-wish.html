@@ -1,0 +1,64 @@
+{% extends 'web/base.html' %}
+{% block content %}
+{% load static %}
+    <div id="all">
+      <div id="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <!-- breadcrumb-->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">Danh sách yêu thích</li>
+                </ol>
+              </nav>
+            </div>
+{% include 'web/layout/menu_left_cus.html' %}
+            <div id="customer-orders" class="col-lg-9">
+              <div class="box">
+                <h1>Sản phẩm yêu thích</h1>
+                <p class="lead">Các sản phẩm yêu thích.</p>
+                <hr>
+                {% if obj %}
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>ID Sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Giá sản phẩm</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in obj %}
+                      <tr>
+                        <th>{{item.pro.id}}</th>
+                        <th>{{item.pro.name}}</th>
+                        <td><a href="{% url 'detail_product' item.pro.id %}"><img src="{{item.pro.image.url}}" alt="{{item.pro.name}}" class="img-fluid img-thumbnail" width="60px"></a></td>
+                        <td>{{item.pro.price}}</td>
+                        <td>
+                          <a href="{% url 'remove_wish' item.pro.id %}" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></a>
+                        </td>
+                        <td>
+                          <a href="{% url 'detail_product' item.pro.id %}" class="btn btn-primary btn-sm show-order"><i class="fa fa-eye"></i></a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                <p class="lead">Ban chưa có sản phẩm yêu thích. <a href="{% url 'categories' %}">Quay lại trang mua sắm</a> </p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+

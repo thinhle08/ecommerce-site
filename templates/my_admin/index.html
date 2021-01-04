@@ -1,0 +1,73 @@
+{% extends 'my_admin/base.html' %}
+{% block content %}
+<div class="page-content">
+        <div class="page-header">
+          <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Thống kê</h2>
+          </div>
+        </div>
+        <section class="no-padding-top no-padding-bottom">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-3 col-sm-6">
+                <a href="{% url 'table_customer' %}" class="text-decoration-none">
+                <div class="statistic-block block">
+                  <div class=" justify-content-between">
+                    <div class="title">
+                      <div class="icon mb-3"><i class="icon-user-1"></i></div>
+                      <strong>Tổng số khách hàng: </strong>
+                    </div>
+                    <div class="number dashtext-1">{{total_cus}}</div>
+                  </div>
+                </div></a>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <a href="{% url 'table_product' %}" class="text-decoration-none">
+                <div class="statistic-block block">
+                  <div class=" justify-content-between">
+                    <div class="title">
+                      <div class="icon mb-3"><i class="fa fa-table"></i></div>
+                      <strong>Tổng số sản phẩm: </strong>
+                    </div>
+                    <div class="number dashtext-3">{{total_pro}}</div>
+                  </div>
+                </div></a>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <a href="{% url 'table_order' %}" class="text-decoration-none">
+                <div class="statistic-block block">
+                  <div class="justify-content-between">
+                    <div class="title">
+                      <div class="icon mb-3"><i class="fa fa-table"></i></div>
+                      <strong>Tổng số đơn hàng: </strong>
+                    </div>
+                    <div class="number dashtext-4">{{total_order}}</div>
+                  </div>
+                </div></a>
+              </div>
+              <div class="col-md-3 col-sm-6">
+                <a href="#" class="text-decoration-none">
+                <div class="statistic-block block">
+                  <div class="progress-details align-items-end justify-content-between">
+                    <div class="title">
+                      <div class="icon mb-3"><i class="fa fa-money"></i></div>
+                      <strong>Tổng doanh thu: </strong>
+                    </div>
+                    <p class="number dashtext-2">${{total_money}}</p>
+                  </div>
+                </div></a>
+              </div>
+
+            </div>
+          </div>
+        </section>
+        <footer class="footer">
+          <div class="footer__block block no-margin-bottom">
+            <div class="container-fluid text-center">
+              <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+              <p class="no-margin-bottom">2020 &copy; Your company. Design by <a href="https://bootstrapious.com/p/bootstrap-4-dark-admin">Bootstrapious</a>.</p>
+            </div>
+          </div>
+        </footer>
+      </div>
+{% endblock content %}
